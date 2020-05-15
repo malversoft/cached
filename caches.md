@@ -1,8 +1,8 @@
 <a id="top"></a>
-[@cached] cache classes
-=======================
+[cachex] cache classes
+======================
 
-[@cached] allows to extend mutable mapping types, including [cachetools] memoizing classes, to ease using them as caches.
+[cachex] allows to extend mutable mapping types, including [cachetools] memoizing classes, to ease using them as caches.
 
 - [Features](#features)
   - [Integrated locking capability](#integrated-locking-capability)
@@ -18,7 +18,7 @@
 
 # Features
 
-Apart from the features of mutable mapping types and [cachetools] memoizing classes, [@cached] classes provide several additional features.
+Apart from the features of mutable mapping types and [cachetools] memoizing classes, [cachex] classes provide several additional features.
 
 <br/>
 
@@ -185,7 +185,7 @@ The hit/miss counters can be reset at any time.
 ```python
 cache.counters_reset()
 # or
-cache.clear()      # This also empties the cache.
+cache.clear()      # This also clears the cache.
 ```
 
 Just as a convenience, the ```counters``` property can also be used as an alternative access to reset the hit/miss counters or to enable/disable its implicit use.
@@ -254,13 +254,13 @@ assert(cache1.parameters == cache2.parameters)
 
 ## Conversion of cache classes
 
-Any mutable mapping type, including [cachetools] cache classes, can be converted into [@cached] cache classes acquiring all its features while fully preserving backward compatibility.
+Any mutable mapping type, including [cachetools] cache classes, can be converted into [cachex] cache classes acquiring all its features while fully preserving backward compatibility.
 
 ```python
->>> from cached import caches
+>>> from cachex import caches
 >>> from cachetools import Cache     # -> cachetools cache class.
 >>> 
->>> Cache = caches.convert(Cache)    # -> @cached cache class.
+>>> Cache = caches.convert(Cache)    # -> cachex cache class.
 >>> 
 >>> cache = Cache()
 >>> cache.info
@@ -270,7 +270,7 @@ CacheInfo(hits=0, misses=0, maxsize=128, currsize=0)
 Even plain ```dict``` and ```weakref.WeakValueDictionary``` types can be converted.
 
 ```python
->>> from cached import caches
+>>> from cachex import caches
 >>> 
 >>> DictCache = caches.convert(dict)
 >>> 
@@ -281,7 +281,7 @@ CacheInfo(hits=0, misses=0, maxsize=None, currsize=0)
 
 If you try to convert an already converted class it will not be converted again, you will just get the same class.
 
-__Note__: The conversion consists in providing a wrapper class around the original mutable mapping type. For this reason it is not recommended to develop cache classes inherited from [@cached] classes (if you want to use features like [managed defaults](#defaults-management) or [cloning](#cloning-capability), for example). The prefered method to develop a cache class with [@cached] features is to inherit from a mutable mapping (for example a [cachetools] cache class) and then convert the developed class.
+__Note__: The conversion consists in providing a wrapper class around the original mutable mapping type. For this reason it is not recommended to develop cache classes inherited from [cachex] classes (if you want to use features like [managed defaults](#defaults-management) or [cloning](#cloning-capability), for example). The prefered method to develop a cache class with [cachex] features is to inherit from a mutable mapping (for example a [cachetools] cache class) and then convert the developed class.
 
 <br/>
 
@@ -289,10 +289,10 @@ __Note__: The conversion consists in providing a wrapper class around the origin
 
 Pools are containers of cache classes that you can organize to conveniently access all your converted cache classes from all over your application.
 
-Meet the [@cached] main pool of cache classes. Some already [implemented cache classes](#cache-implementations) are provided by default in the main pool of classes.
+Meet the [cachex] main pool of cache classes. Some already [implemented cache classes](#cache-implementations) are provided by default in the main pool of classes.
 
 ```python
-from cached import caches
+from cachex import caches
 
 cache = caches.UnboundedCache()
 ```
@@ -304,7 +304,7 @@ If a standard mutable mapping type (for example a [cachetools] cache class) is a
 Example:
 
 ```python
-from cached import caches
+from cachex import caches
 from mycaches import MyCache     # -> Mutable mapping class.
 
 caches.add(MyCache)
@@ -313,7 +313,7 @@ caches.add(MyCache)
 Now the class can be used in other modules without having to import or convert it again.
 
 ```python
-from cached import caches
+from cachex import caches
 
 cache = caches.MyCache()
 cache.info
@@ -322,7 +322,7 @@ cache.info
 Even entire modules containing mutable mapping classes can be added to the pool to have those classes conveniently converted and accessible.
 
 ```python
-from cached import caches
+from cachex import caches
 import mycaches          # -> Module with mutable mapping classes.
 
 caches.add(mycaches)
@@ -350,7 +350,7 @@ When adding a module, the created container is also another pool of classes.
 Examples:
 
 ```python
-from cached import caches
+from cachex import caches
 
 import mycaches
 import othercaches
@@ -383,7 +383,7 @@ assert(mypool.defaults)
 Default parameters for creating cache instances are centralized, global and can be easily accessed and modified using any [pool of cache classes](#pools-of-cache-classes).
 
 ```python
->>> from cached import caches
+>>> from cachex import caches
 >>> cache1 = caches.MyCache()
 >>> cache1.maxsize
 128
@@ -411,7 +411,7 @@ class MyCache(cachetools.Cache):
         super().__init__(maxsize=maxsize)
 
 # Add to the pool of caches, for convenience.
-from cached import caches
+from cachex import caches
 caches.add(MyCache)
 
 # Set a default value for your customized argument.
@@ -421,7 +421,7 @@ caches.defaults.custom_param = 'CUSTOM VALUE'
 Now the class can be instantiated in any module using the default value specified for the parameter.
 
 ```python
-from cached import caches
+from cachex import caches
 
 cache = caches.MyCache()    # No parameters informed.
 print(cache.custom)         # -> 'CUSTOM VALUE'
@@ -454,7 +454,7 @@ caches.defaults.custom_param__None
 You can check the defined defaults at any moment.
 
 ```python
->>> from cached import caches
+>>> from cachex import caches
 >>> caches.defaults
 CacheDefaults({'maxsize': 128, 'ttl': 600})
 >>> 'maxsize' in caches.defaults
@@ -504,17 +504,17 @@ Please refer to the [cachetools documentation](https://cachetools.readthedocs.io
 
   Implementation of a zero-size cache that does not store items and thus always misses. Not intended to be useful for production use, just for testing and development purposes.
 
-As stated in the section about [converting classes](#conversion-of-cachetools-classes), it is not recommended to develop cache classes inherited from [@cached] classes. The developed classes must inherit from a mutable mapping type (like [cachetools] cache classes), and later be [converted](#conversion-of-cachetools-classes) and optionally added to a [pool](#pools-of-cache-classes).
+As stated in the section about [converting classes](#conversion-of-cachetools-classes), it is not recommended to develop cache classes inherited from [cachex] classes. The developed classes must inherit from a mutable mapping type (like [cachetools] cache classes), and later be [converted](#conversion-of-cachetools-classes) and optionally added to a [pool](#pools-of-cache-classes).
 
 For this purpose, standard versions of these mutable mapping classes are made available.
 
 ```python
-from cached import standard, caches
+from cachex import standard, caches
 standard.UnboundedTTLCache    # -> Standard mutable mapping class
-caches.UnboundedTTLCache      # -> @cached version
+caches.UnboundedTTLCache      # -> cachex version
 ```
 
 [default]: #defaults-management
 [defaults]: #defaults-management
-[@cached]: ./README.md#top
+[cachex]: ./README.md#top
 [cachetools]: https://github.com/tkem/cachetools/

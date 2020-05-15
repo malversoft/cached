@@ -1,8 +1,8 @@
 <a id="top"></a>
-[@cached] package
-=================
+[cachex] package
+================
 
-[@cached] extends [cachetools] package and wraps memoizing classes providing them with additional cache features.
+[cachex] extends [cachetools] package and wraps memoizing classes providing them with additional cache features.
 
 It also provides an all-in-one decorator to conveniently memoize any function call results.
 
@@ -21,7 +21,7 @@ Copyright (c) 2020 Fernando Lordán.
 
 Licensed under the [MIT License].
 
-[@cached]: ./README.md#top
+[cachex]: ./README.md#top
 [Cache classes]: ./caches.md#top
 [Decorator]: ./decorator.md#top
 [MIT License]: ./LICENSE.txt

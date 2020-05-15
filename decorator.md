@@ -1,8 +1,8 @@
 <a id="top"></a>
-[@cached] decorator
-===================
+[cachex] decorator
+==================
 
-[@cached] provides a decorator intended for memoizing calls to functions, methods and even properties. This can save time when a call is often issued with the same arguments.
+[cachex] provides a decorator intended for memoizing calls to functions, methods and even properties. This can save time when a call is often issued with the same arguments.
 
 - [Basic usage](#basic-usage)
 - [Syntax](#syntax)
@@ -28,7 +28,7 @@
 Here is the simplest possible use.
 
 ```python
-from cached import cached
+from cachex import cached
 
 @cached
 def myfunction(some_arg, ...):
@@ -92,7 +92,7 @@ The cache to use for memoizing call results can be specified in four ways.
   If not specified at all, a [default] cache will be created and used.
 
   ```python
-  from cached import cached
+  from cachex import cached
 
   @cached(maxsize=1024)
   def myfunction(some_arg, ...):
@@ -104,10 +104,10 @@ The cache to use for memoizing call results can be specified in four ways.
 
 - ### Explicitly
   
-  Specifying an instance of a [@cached] [cache class].
+  Specifying an instance of a [cachex] [cache class].
 
   ```python
-  from cached import cached, caches
+  from cachex import cached, caches
 
   @cached(caches.UnboundedTTLCache(ttl=3600))
   def myfunction(some_arg, ...):
@@ -118,7 +118,7 @@ The cache to use for memoizing call results can be specified in four ways.
   For convenience, the [main pool](./caches.md#pools-of-cache-classes) of cache classes is included in the decorator, so you do not need to import it.
 
   ```python
-  from cached import cached
+  from cachex import cached
 
   @cached(cached.caches.UnboundedTTLCache(ttl=3600))
   def myfunction(some_arg, ...):
@@ -129,7 +129,7 @@ The cache to use for memoizing call results can be specified in four ways.
   You can also specify the [cache class] itself, and it will be created using the decorator [defaults].
   
   ```python
-  from cached import cached
+  from cachex import cached
 
   @cached(cached.caches.UnboundedTTLCache)
   def myfunction(some_arg, ...):
@@ -165,7 +165,7 @@ The cache to use for memoizing call results can be specified in four ways.
 
 - ### Builtin variants
 
-  There are some variants builtin in the decorator to easily use the cache classes already incorporated in [@cached].
+  There are some variants builtin in the decorator to easily use the cache classes already incorporated in [cachex].
 
   All arguments are optional and can take [default] values. Even the parenthesis are optional.
 
@@ -215,7 +215,7 @@ The cache to use for memoizing call results can be specified in four ways.
 
   ```python
   import time
-  from cached import cached, caches
+  from cachex import cached, caches
 
   myfunction_cache = caches.UnboundedCache()
   last_time = time.monotonic()
@@ -425,7 +425,7 @@ All the decorator variants admit some generic parameters to specify the caching 
 
     ```python
     import threading
-    from cached import cached
+    from cachex import cached
 
     @cached(lock=threading.RLock())
     def myfunction(some_arg, ...):
@@ -443,7 +443,7 @@ All the decorator variants admit some generic parameters to specify the caching 
 
     ```python
     import threading
-    from cached import cached
+    from cachex import cached
 
     class MyClass():
 
@@ -832,7 +832,7 @@ Examples:
 
 ```python
 import operator
-from cached import cached
+from cachex import cached
 
 class MyClass():
 
@@ -884,7 +884,7 @@ def myfunction(some_arg, ...):
  
 - myfunction```.cache_clear()```
 
-  Clears and empties the cache being used.
+  Clears or invalidates the cache being used.
 
 - myfunction```.cache_info()```
 
@@ -940,7 +940,7 @@ MyClass.mymethod.uncached(instance, some_arg, ...)
 Default parameters for the decorator can be easily accessed and modified, in a similar way that [caches defaults] are managed. Please refer to that part of the documentation for an overview on how to manage parameters defaults.
 
 ```python
->>> from cached import cached
+>>> from cachex import cached
 >>> 
 >>> cached.defaults
 CacheDefaults({'typed': False, 'exceptions': None, 'stateful': False, 'shared': True, 'maxsize': 128, 'maxsize__None': inf, 'ttl': 600})
@@ -955,7 +955,7 @@ __Note__: The decorator defaults are applied to decorator parameters only. If yo
 Anyway, some of the decorator defaults are dynamically inherited from the [caches defaults], specifically the ones that apply to parameters that correspond to cache instance creation.
 
 ```python
->>> from cached import cached, caches
+>>> from cachex import cached, caches
 >>> 
 >>> caches.defaults.maxsize         # Default at cache classes level.
 128
@@ -1021,7 +1021,7 @@ Some other decorator features not so relevant as to be on the big list.
 
   ```python
   import inspect
-  from cached import cached
+  from cachex import cached
 
   class MyClass():
 
@@ -1047,7 +1047,7 @@ Some other decorator features not so relevant as to be on the big list.
   A decorator can be reused to dynamically cache several functions or methods.
 
   ```python
-  from cached import cached
+  from cachex import cached
 
   def myfunction1(some_arg, ...):
       ...
@@ -1093,7 +1093,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
 
 - Equivalences
 
-  These are some equivalences between using other memoizing solutions and using the [@cached] decorator.
+  These are some equivalences between using other memoizing solutions and using the [cachex] decorator.
 
   - ```python
     @functools.lru_cache[(maxsize, typed)]
@@ -1104,7 +1104,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     @cachetools.func.ttl_cache[(maxsize, ttl, timer, typed)]
     ```
 
-    Using the [@cached] decorator:
+    Using the [cachex] decorator:
 
     ```python
     @cached.lru_cache[(maxsize, typed)]
@@ -1119,7 +1119,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     @functools.cached_property
     ```
 
-    Using the [@cached] decorator:
+    Using the [cachex] decorator:
 
     ```python
     @cached.property
@@ -1129,7 +1129,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     @cachetools.cached(cache_instance, key, lock)
     ```
 
-    Using the [@cached] decorator:
+    Using the [cachex] decorator:
 
     ```python
     @cached(cache_instance, key, lock)
@@ -1139,7 +1139,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     @cachetools.cachedmethod(cache_getter, key, lock_getter)
     ```
 
-    Using the [@cached] decorator:
+    Using the [cachex] decorator:
 
     ```python
     @cached.shared(cache_getter, key, lock_getter)
@@ -1147,7 +1147,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
 
 - Accessors
 
-  The [@cached] decorator also provides the cache [accesors](#accessors) provided by the [functools] or [cachetools] decorators.
+  The [cachex] decorator also provides the cache [accesors](#accessors) provided by the [functools] or [cachetools] decorators.
 
   - cached_function```.cache_info()```
   - cached_function```.cache_clear()```
@@ -1156,7 +1156,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
 [default]: #defaults-management
 [defaults]: #defaults-management
 [caches defaults]: ./caches.md#defaults-management
-[@cached]: ./README.md#top
+[cachex]: ./README.md#top
 [cache class]: ./caches.md#top
 [functools]: https://docs.python.org/library/functools.html
 [cachetools]: https://github.com/tkem/cachetools/
