@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
+import math
+
 from .. import caches
 
 
@@ -10,7 +12,8 @@ class CacheDefaults(type(caches.defaults)):
 	# Default decorators arguments.
 
 	# Emulate Python @functools.lru_cache() defaults.
-	default_maxsize__None = float('inf')
+	default_maxsize__None = math.inf
+	default_ttl__None = math.inf
 	default_typed = False
 
 	default_exceptions = None

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-import uuid, threading
+import uuid, threading, math
 from collections import namedtuple
 
 from .CacheParameters import CacheParameters
@@ -97,7 +97,7 @@ def _get_wrapper_class(kls):
 					self.__parameters['maxsize'] = super().maxsize
 				except AttributeError:
 					pass
-				if self.__parameters['maxsize'] == float('inf'):
+				if self.__parameters['maxsize'] == math.inf:
 					self.__parameters['maxsize'] = None
 
 			# Initialize lock.
@@ -125,7 +125,7 @@ def _get_wrapper_class(kls):
 				except AttributeError:
 					# Support any mutable mapping.
 					maxsize = None
-				if maxsize == float('inf'):
+				if maxsize == math.inf:
 					return None
 				else:
 					return maxsize

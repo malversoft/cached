@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-import inspect, operator
+import inspect, operator, math
 
 from .CacheDefaults import CacheDefaults
 from .CacheDescription import CacheDescription
@@ -95,7 +95,7 @@ class DecoratorHelper():
 				param = params_def[pname]
 				if param.kind is inspect.Parameter.VAR_POSITIONAL:
 					# Accessor accepts positional wildcard argument *args.
-					return float('inf')
+					return math.inf
 				elif not param.kind is inspect.Parameter.VAR_KEYWORD:
 					# Discard keyword wildcard argument **kwargs, if present.
 					nargs += 1
