@@ -514,8 +514,6 @@ standard.UnboundedTTLCache    # -> Standard mutable mapping class
 caches.UnboundedTTLCache      # -> @cached version
 ```
 
-<br/>
-
 [default]: #defaults-management
 [defaults]: #defaults-management
 [@cached]: ./README.md#top
