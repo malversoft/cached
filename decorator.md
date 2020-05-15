@@ -355,15 +355,15 @@ All the decorator variants admit some generic parameters to specify the caching 
 
     - ```False``` ([default])
     
-	  Object state will not be taken into account.
+      Object state will not be taken into account.
 
     - ```True```
     
-	  Take into account the object state when caching calls results.
+      Take into account the object state when caching calls results.
 
     - callable function
 
-	  Take into account the object state as returned by the specified function.
+      Take into account the object state as returned by the specified function.
 
   Refer to the section about [state dependent caching](#state-dependent-caching) for details and examples.
 
@@ -379,7 +379,7 @@ All the decorator variants admit some generic parameters to specify the caching 
 
     - ```False```
 
-	  Each object instance will use its own specific cache instance for the method.
+      Each object instance will use its own specific cache instance for the method.
 
     - callable function
 
@@ -415,49 +415,49 @@ All the decorator variants admit some generic parameters to specify the caching 
 
   - ```None``` ([default])
 
-	The [integrated cache lock](./caches.md#integrated-locking-capability) will be used.
+    The [integrated cache lock](./caches.md#integrated-locking-capability) will be used.
 
   - lock object
   
-	The specified [lock](https://docs.python.org/library/threading.html#lock-objects) or [semaphore](https://docs.python.org/library/threading.html#semaphore-objects) object will be used.
+    The specified [lock](https://docs.python.org/library/threading.html#lock-objects) or [semaphore](https://docs.python.org/library/threading.html#semaphore-objects) object will be used.
 
-	Example:
+    Example:
 
-	```python
+    ```python
     import threading
-	from cached import cached
+    from cached import cached
 
-	@cached(lock=threading.RLock())
-	def myfunction(some_arg, ...):
-		...
-		return some_value
-	```
+    @cached(lock=threading.RLock())
+    def myfunction(some_arg, ...):
+        ...
+        return some_value
+    ```
 
   - callable function
 
     Function that provides the [lock](https://docs.python.org/library/threading.html#lock-objects) or [semaphore](https://docs.python.org/library/threading.html#semaphore-objects) object that will be used.
 
-	When caching a method, if the specified function accepts an argument it will be used as a getter and the bound object will be passed as argument.
+    When caching a method, if the specified function accepts an argument it will be used as a getter and the bound object will be passed as argument.
 
-	Example:
+    Example:
 
-	```python
+    ```python
     import threading
-	from cached import cached
+    from cached import cached
 
-	class MyClass():
+    class MyClass():
 
-		mymethod_lock = threading.RLock()
+        mymethod_lock = threading.RLock()
 
-		@cached(lock=operator.attrgetter('mymethod_lock'))
-		def mymethod(self, some_arg, ...):
-			...
-			return some_value
-	```
+        @cached(lock=operator.attrgetter('mymethod_lock'))
+        def mymethod(self, some_arg, ...):
+            ...
+            return some_value
+    ```
 
-	__Note__: The provided lock object must be created only once, not each time the function is called. The provided function will be called an undetermined number of times, so it would be an error to create a lock object each time it is called.
+    __Note__: The provided lock object must be created only once, not each time the function is called. The provided function will be called an undetermined number of times, so it would be an error to create a lock object each time it is called.
 
-	If the provided function accepts two arguments, the cached function name will be passed too. This allows the custom lock provider to know which method the lock object is for.
+    If the provided function accepts two arguments, the cached function name will be passed too. This allows the custom lock provider to know which method the lock object is for.
 
 <br/>
 
@@ -476,8 +476,8 @@ Examples:
 ```python
 @cached(typed=False)
 de myfunction(some_arg):
-	...
-	return some_value
+    ...
+    return some_value
 
 # These calls will be considered the same,
 # as ignoring its type the arguments have the same value.
@@ -487,8 +487,8 @@ myfunction(3.0)
 ```python
 @cached(typed=True)
 de myfunction(some_arg):
-	...
-	return some_value
+    ...
+    return some_value
 
 # These calls will be considered distinct and will be cached separately,
 # as the type or the arguments differ despite its values being equivalent.
@@ -511,32 +511,32 @@ Examples:
 # will be cached as a call result.
 @cached(exceptions=True)
 def myfunction(some_arg, ...):
-	...
-	return some_value
+    ...
+    return some_value
 ```
 ```python
 # Only raised exceptions of the specified type
 # will be cached as a call result.
 @cached(exceptions=ValueError)
 def myfunction(some_arg, ...):
-	...
-	return some_value
+    ...
+    return some_value
 ```
 ```python
 # Only raised exceptions of the specified types
 # will be cached as a call result.
 @cached(exceptions=(ValueError,TypeError))
 def myfunction(some_arg, ...):
-	...
-	return some_value
+    ...
+    return some_value
 ```
 ```python
 # No exceptions will be cached as call results. When the function
 # raises and exception that call will not be cached.
 @cached(exceptions=False)
 def myfunction(some_arg, ...):
-	...
-	return some_value
+    ...
+    return some_value
 ```
 
 <br/>
@@ -549,12 +549,12 @@ Consider the next example case.
 
 ```python
 class Number():
-	def __init__(self, value):
-		self.value = value
+    def __init__(self, value):
+        self.value = value
 
-	@cached(stateful=False)
-	def sum(self, x):
-		return self.value + x
+    @cached(stateful=False)
+    def sum(self, x):
+        return self.value + x
 ```
 
 Subsequent calls to the method will give cached wrong results due to caching.
@@ -574,12 +574,12 @@ Now let us have into account the object state.
 
 ```python
 class Number():
-	def __init__(self, value):
-		self.value = value
+    def __init__(self, value):
+        self.value = value
 
-	@cached(stateful=True)
-	def sum(self, x):
-		return self.value + x
+    @cached(stateful=True)
+    def sum(self, x):
+        return self.value + x
 ```
 ```python
 number = Number(0)
@@ -607,12 +607,12 @@ So in the previous example this could be used.
 
 ```python
 class Number():
-	def __init__(self, value):
-		self.value = value
+    def __init__(self, value):
+        self.value = value
 
-	@cached(stateful=lambda self: self.value)
-	def sum(self, x):
-		return self.value + x
+    @cached(stateful=lambda self: self.value)
+    def sum(self, x):
+        return self.value + x
 ```
 
 <br/>
@@ -626,10 +626,10 @@ Example of method using a class shared cache.
 ```python
 class MyClass():
 
-	@cached(shared=True)
-	def mymethod(self, some_arg):
-		...
-		return some_value
+    @cached(shared=True)
+    def mymethod(self, some_arg):
+        ...
+        return some_value
 
 instance1 = MyClass()
 instance2 = MyClass()
@@ -650,10 +650,10 @@ Example of method using per-instance independent cache.
 ```python
 class MyClass():
 
-	@cached(shared=False)
-	def mymethod(self, some_arg):
-		...
-		return some_value
+    @cached(shared=False)
+    def mymethod(self, some_arg):
+        ...
+        return some_value
 
 instance1 = MyClass()
 instance2 = MyClass()
@@ -680,13 +680,13 @@ Example of shared class cache using this feature.
 ```python
 class MyClass():
 
-	# Cache shared by all instances.
-	mymethod_shared_cache = cached.caches.Cache()
+    # Cache shared by all instances.
+    mymethod_shared_cache = cached.caches.Cache()
 
-	@cached.shared(operator.attrgetter('mymethod_shared_cache'))
-	def mymethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached.shared(operator.attrgetter('mymethod_shared_cache'))
+    def mymethod(self, some_arg, ...):
+        ...
+        return some_value
 ```
 
 Example of per-instance cache using this feature.
@@ -694,14 +694,14 @@ Example of per-instance cache using this feature.
 ```python
 class MyClass():
 
-	def __init__(self):
-		# Create one cache for each instance.
-		self.mymethod_instance_cache = cached.caches.Cache()
+    def __init__(self):
+        # Create one cache for each instance.
+        self.mymethod_instance_cache = cached.caches.Cache()
 
-	@cached.shared(operator.attrgetter('mymethod_instance_cache'))
-	def mymethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached.shared(operator.attrgetter('mymethod_instance_cache'))
+    def mymethod(self, some_arg, ...):
+        ...
+        return some_value
 ```
 
 This allows the object class to do more powerful cache management for the method.
@@ -711,25 +711,25 @@ Example: method using different cache type depending on the object instance char
 ```python
 class MyClass():
 
-	def __init__(self, use_cache):
-		self.use_cache = use_cache
+    def __init__(self, use_cache):
+        self.use_cache = use_cache
 
-	def mymethod_cache_getter(self):
-		try:
-			return self.mymethod_cache
-		except AttributeError:
-			# If not created, create cache instance
-			# depending on object characterization.
-			if self.use_cache:
-				self.mymethod_cache = cached.caches.Cache()
-			else:
-				self.mymethod_cache = cached.caches.NoCache()
-		return self.mymethod_cache
+    def mymethod_cache_getter(self):
+        try:
+            return self.mymethod_cache
+        except AttributeError:
+            # If not created, create cache instance
+            # depending on object characterization.
+            if self.use_cache:
+                self.mymethod_cache = cached.caches.Cache()
+            else:
+                self.mymethod_cache = cached.caches.NoCache()
+        return self.mymethod_cache
 
-	@cached.shared(operator.methodcaller('mymethod_cache_getter'))
-	def mymethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached.shared(operator.methodcaller('mymethod_cache_getter'))
+    def mymethod(self, some_arg, ...):
+        ...
+        return some_value
 
 
 # This instance will use cache for the method 'mymethod'.
@@ -748,35 +748,35 @@ Example: methods using different cache type depending on the object instance cha
 ```python
 class MyClass():
 
-	def __init__(self, use_cache):
-		self.use_cache = use_cache
+    def __init__(self, use_cache):
+        self.use_cache = use_cache
 
-	def caches_provider(self, method_name):
-		try:
-			return self.caches[method_name]
-		except AttributeError:
-			# On first call, setup container for methods´ caches.
-			self.caches = {}
-			return self.caches_provider(method_name)
-		except KeyError:
-			# If not created, create cache instance
-			# for the specific method
-			# depending on object characterization.
-			if self.use_cache:
-				self.caches[method_name] = cached.caches.Cache()
-			else:
-				self.caches[method_name] = cached.caches.NoCache()
-		return self.caches[method_name]
+    def caches_provider(self, method_name):
+        try:
+            return self.caches[method_name]
+        except AttributeError:
+            # On first call, setup container for methods´ caches.
+            self.caches = {}
+            return self.caches_provider(method_name)
+        except KeyError:
+            # If not created, create cache instance
+            # for the specific method
+            # depending on object characterization.
+            if self.use_cache:
+                self.caches[method_name] = cached.caches.Cache()
+            else:
+                self.caches[method_name] = cached.caches.NoCache()
+        return self.caches[method_name]
 
-	@cached.shared(caches_provider)
-	def mymethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached.shared(caches_provider)
+    def mymethod(self, some_arg, ...):
+        ...
+        return some_value
 
-	@cached.shared(caches_provider)
-	def othermethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached.shared(caches_provider)
+    def othermethod(self, some_arg, ...):
+        ...
+        return some_value
 ```
 
 <br/>
@@ -868,8 +868,8 @@ Given a cached function or method...
 ```python
 @cached[...]
 def myfunction(some_arg, ...):
-	...
-	return some_value
+    ...
+    return some_value
 ```
 
 ... the next accessors are provided,
@@ -902,10 +902,10 @@ For example:
 # Let us cache a method using per-instance independent caches.
 class MyClass():
 
-	@cached(cached.caches.Cache(), shared=False)
-	def mymethod(self, some_arg, ...):
-		...
-		return some_value
+    @cached(cached.caches.Cache(), shared=False)
+    def mymethod(self, some_arg, ...):
+        ...
+        return some_value
 
 instance = MyClass()
 
@@ -1152,8 +1152,6 @@ The decorator makes its best to be compatible with other memoizing solutions lik
   - cached_function```.cache_info()```
   - cached_function```.cache_clear()```
   - cached_function```.cache_parameters()```
-
-<br/>
 
 [default]: #defaults-management
 [defaults]: #defaults-management
