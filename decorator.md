@@ -305,7 +305,7 @@ Please refer to the section about [transformers](#transformers) for details and 
 
 ## Generic parameters
 
-All the decorator variants admit some generic parameters to specify the caching features applied to the specific function/method/property memoization.
+All the decorator variants accept some generic parameters to specify the caching features applied to the specific function/method/property memoization.
 
 - ```typed```
 
@@ -557,7 +557,7 @@ class Number():
         return self.value + x
 ```
 
-Subsequent calls to the method will give cached wrong results due to caching.
+Subsequent calls to the method will produce wrong results due to caching.
 
 ```python
 number = Number(0)
@@ -943,7 +943,7 @@ Default parameters for the decorator can be easily accessed and modified, in a s
 >>> from cachex import cached
 >>> 
 >>> cached.defaults
-CacheDefaults({'typed': False, 'exceptions': None, 'stateful': False, 'shared': True, 'maxsize': 128, 'maxsize__None': inf, 'ttl': 600})
+CacheDefaults({'typed': False, 'exceptions': None, 'stateful': False, 'shared': True, 'maxsize': 128, 'maxsize__None': inf, 'ttl': 600, 'ttl__None': inf})
 >>> 
 >>> cached.defaults.typed
 False
@@ -980,7 +980,7 @@ This should be taken into account when deleting modified defaults.
 
 ```python
 >>> del cached.defaults.maxsize     # Modification deleted at decorator level...
->>> cached.defaults.maxsize         # ... so it inherits again from cache classes levels.
+>>> cached.defaults.maxsize         # ... so it inherits again from cache classes level.
 1024
 ```
 
@@ -1033,7 +1033,7 @@ Some other decorator features not so relevant as to be on the big list.
   instance2 = MyClass()
 
   # Only this instance method will be memoized.
-  instance1.mymethod = cached.lru_cache(instance.mymethod)
+  instance1.mymethod = cached.lru_cache(instance1.mymethod)
 
   instance1.mymethod(some_arg, ...)    # This call is cached.
   instance2.mymethod(some_arg, ...)    # This call is not cached.
@@ -1126,23 +1126,23 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     ```
 
   - ```python
-    @cachetools.cached(cache_instance, key, lock)
+    @cachetools.cached(cache_obj, key=key_func, lock=lock_obj)
     ```
 
     Using the [cachex] decorator:
 
     ```python
-    @cached(cache_instance, key, lock)
+    @cached(cache_obj, key=key_func, lock=lock_obj)
     ```
 
   - ```python
-    @cachetools.cachedmethod(cache_getter, key, lock_getter)
+    @cachetools.cachedmethod(cache_getter, key=key_func, lock=lock_getter)
     ```
 
     Using the [cachex] decorator:
 
     ```python
-    @cached.shared(cache_getter, key, lock_getter)
+    @cached.shared(cache_getter, key=key_func, lock=lock_getter)
     ```
 
 - Accessors

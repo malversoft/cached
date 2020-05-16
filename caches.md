@@ -125,7 +125,7 @@ Due to the duck typing nature of Python this cannot be completely automated, so 
   assert(cache.misses == 1)
   ```
 
-  - The easiest way is to use the provided ```counters``` property to enclose a context where the counters will be incremented implicitly.
+- The easiest way is to use the provided ```counters``` property to enclose a context where the counters will be incremented implicitly.
 
   ```python
   cache = MyCache()
@@ -299,7 +299,7 @@ cache = caches.UnboundedCache()
 
 For convenience, any cache class can be added to a pool of classes. This makes the class accessible across modules without having to import or convert it in each module you use it.
 
-If a standard mutable mapping type (for example a [cachetools] cache class) is added to a pool, it will be automatically [converted](#conversion-of-cachetools-classes).
+If a standard mutable mapping type (for example a [cachetools] cache class) is added to a pool, it will be automatically [converted](#conversion-of-cache-classes).
 
 Example:
 
@@ -480,7 +480,7 @@ Some cache classes are provided by default in the main [pool of classes](#pools-
 
 Please refer to the [cachetools documentation](https://cachetools.readthedocs.io/en/stable/#cache-implementations) for a better understanding of the caches parameters.
 
-- A direct [conversion](#conversion-of-cachetools-classes) of the classes provided by [cachetools].
+- A direct [conversion](#conversion-of-cache-classes) of the classes provided by [cachetools].
   
   These are documented in the [cachetools documentation](https://cachetools.readthedocs.io/en/stable/#cache-implementations).
   
@@ -504,7 +504,7 @@ Please refer to the [cachetools documentation](https://cachetools.readthedocs.io
 
   Implementation of a zero-size cache that does not store items and thus always misses. Not intended to be useful for production use, just for testing and development purposes.
 
-As stated in the section about [converting classes](#conversion-of-cachetools-classes), it is not recommended to develop cache classes inherited from [cachex] classes. The developed classes must inherit from a mutable mapping type (like [cachetools] cache classes), and later be [converted](#conversion-of-cachetools-classes) and optionally added to a [pool](#pools-of-cache-classes).
+As stated in the section about [converting classes](#conversion-of-cache-classes), it is not recommended to develop cache classes inherited from [cachex] classes. The developed classes must inherit from a mutable mapping type (like [cachetools] cache classes), and later be [converted](#conversion-of-cache-classes) and optionally added to a [pool](#pools-of-cache-classes).
 
 For this purpose, standard versions of these mutable mapping classes are made available.
 

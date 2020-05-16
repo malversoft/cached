@@ -24,6 +24,6 @@ Licensed under the [MIT License].
 [cachex]: ./README.md#top
 [Cache classes]: ./caches.md#top
 [Decorator]: ./decorator.md#top
-[MIT License]: ./LICENSE.txt
+[MIT License]: ./LICENSE
 [cachetools]: https://github.com/tkem/cachetools/
 [Python]: https://www.python.org/
