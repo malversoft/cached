@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Memoizing cache classes."""
+"""Memoizing decorator."""
 
 
 from .CacheDefaults import CacheDefaults
