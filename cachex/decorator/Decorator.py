@@ -149,7 +149,7 @@ class Decorator():
 
 		# Compatibility with cachetools 'key' argument.
 		if _config.key:
-			_config['typed'] = CacheKeyHelper.get_typed_from_key(_config.typed)		# True, False or None.
+			_config['typed'] = CacheKeyHelper.get_typed_from_key(_config.key)		# True, False or None.
 			_config_irrelevant.append('typed')
 		else:
 			_config_irrelevant.append('key')
