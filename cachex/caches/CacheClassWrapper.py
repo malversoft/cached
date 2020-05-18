@@ -148,14 +148,14 @@ def _get_wrapper_class(kls):
 			with self.counters(False):
 				items = list(self.items())
 			counters = self.counters and ', hits=%r, misses=%r' % (self.__hits, self.__misses,) or ''
-			config = ', '.join(['%s=%r' % (k, self.__parameters[k]) for k in self.__parameters if k not in ('maxsize',)])
+			params = ', '.join(['%s=%r' % (k, self.__parameters[k]) for k in self.__parameters if k not in ('maxsize',)])
 			return '%s(%r%s, currsize=%r, maxsize=%r%s)' % (
 				type(self).__name__,
 				items,
 				counters,
 				self._currsize_info(),
 				self._maxsize_info(),
-				config and (', %s' % (config,)),
+				params and (', %s' % (params,)),
 			)
 
 		def __getitem__(self, key):
