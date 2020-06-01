@@ -32,7 +32,7 @@ class Helper():
 		try:
 			iter(module)
 		except:
-			for k in module.__dict__.copy():
+			for k in dir(module):
 				if k.startswith('_'):
 					continue
 				kls = getattr(module, k)
