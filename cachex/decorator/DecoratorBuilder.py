@@ -106,7 +106,7 @@ class DecoratorBuilder():
 				else:
 					sharedarg = None
 			if sharedarg and DecoratorHelper.is_callable(sharedarg):
-				# Called without shared cache function argument. Return decorator.
+				# Called with shared cache function argument. Return decorator.
 				kwargs['shared'] = sharedarg
 				kwargs.pop('cache', None)
 				decorator = Decorator(False, *args, _transformer=transformer, **kwargs)
