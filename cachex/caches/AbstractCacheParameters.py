@@ -38,7 +38,7 @@ class AbstractCacheParameters(OrderedDict):
 		try:
 			return self[key]
 		except KeyError:
-			raise AttributeError("{!r} object has no attribute {!r}." % (type(self).__name__, key))
+			raise AttributeError("{!r} object has no attribute {!r}.".format(type(self).__name__, key))
 
 	@classmethod
 	def bind(_cls, _func, *args, _strict=False, **kwargs):
