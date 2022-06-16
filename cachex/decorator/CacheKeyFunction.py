@@ -17,7 +17,7 @@ class CacheKeyFunction():
 		if config.key:
 			# Alternate key functions can be used.
 			alttyped = CacheKeyHelper.get_typed_from_key(config.key)
-			if not alttyped is None:
+			if alttyped is not None:
 				# Recognized cachetools key function.
 				# Resulting 'typed' value prevails over the one specified in decorator parameters.
 				typed = alttyped

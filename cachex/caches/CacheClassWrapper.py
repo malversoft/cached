@@ -246,7 +246,7 @@ def _get_wrapper_class(kls):
 			if not value:
 				# Set no lock.
 				self.__lock = NoLock()
-			elif not hasattr(value, '__enter__'):
+			elif not hasattr(value, '__enter__') or not hasattr(value, '__exit__'):
 				# Set default lock.
 				lock_class = self.__configuration._defaults._lock_class
 				try:

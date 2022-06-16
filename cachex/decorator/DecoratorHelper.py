@@ -96,7 +96,7 @@ class DecoratorHelper():
 				if param.kind is inspect.Parameter.VAR_POSITIONAL:
 					# Accessor accepts positional wildcard argument *args.
 					return math.inf
-				elif not param.kind is inspect.Parameter.VAR_KEYWORD:
+				elif param.kind is not inspect.Parameter.VAR_KEYWORD:
 					# Discard keyword wildcard argument **kwargs, if present.
 					nargs += 1
 			return nargs

@@ -19,7 +19,7 @@ class AbstractCacheParameters(OrderedDict):
 			if params[p] is inspect._empty:
 				# Missing parameter.
 				default = getattr(self._defaults, p, defaults.get(p, inspect._empty))	# Default for missing value.
-				if not default is inspect._empty:
+				if default is not inspect._empty:
 					self[p] = default
 				else:
 					self[p] = None
@@ -27,7 +27,7 @@ class AbstractCacheParameters(OrderedDict):
 				# Parameter with explicit None value.
 				default = getattr(self._defaults, p, defaults.get(p, inspect._empty))	# Default for missing value.
 				default_None = getattr(self._defaults, p + self._defaults._suffix_None, default)  # Default for None value.
-				if not default_None is inspect._empty:
+				if default_None is not inspect._empty:
 					self[p] = default_None
 				else:
 					self[p] = None
@@ -38,7 +38,7 @@ class AbstractCacheParameters(OrderedDict):
 		try:
 			return self[key]
 		except KeyError:
-			raise AttributeError("'%s' object has no attribute '%s'." % (type(self).__name__, key))
+			raise AttributeError("{!r} object has no attribute {!r}." % (type(self).__name__, key))
 
 	@classmethod
 	def bind(_cls, _func, *args, _strict=False, **kwargs):

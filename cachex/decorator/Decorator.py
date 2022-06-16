@@ -290,7 +290,7 @@ class Decorator():
 
 			if access_cache is None:
 
-				if not get_cache is None:
+				if get_cache is not None:
 
 					def access_cache(obj_self = None, obj_other = None):
 						if obj_other:
