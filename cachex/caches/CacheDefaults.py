@@ -13,11 +13,11 @@ class CacheDefaults(AbstractCacheDefaults):
 
 	# Default cache arguments.
 
-	default_maxsize = 128
-	default_ttl = 600
+	def__maxsize = 128
+	def__ttl = 600
 
 	# Protected defaults.
 
 	# Default lock class or factory.
 	# Specify False|None if you do not want integrated locking capabilities.
-	default__lock_class = threading.RLock
+	def___lock_class = threading.RLock

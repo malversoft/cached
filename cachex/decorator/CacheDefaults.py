@@ -12,23 +12,23 @@ class CacheDefaults(type(caches.defaults)):
 	# Default decorators arguments.
 
 	# Emulate Python @functools.lru_cache() defaults.
-	default_maxsize__None = math.inf
-	default_ttl__None = math.inf
-	default_typed = False
+	def__maxsize__None = math.inf
+	def__ttl__None = math.inf
+	def__typed = False
 
-	default_exceptions = None
-	default_stateful = False
-	default_shared = True
+	def__exceptions = None
+	def__stateful = False
+	def__shared = True
 
 	# Protected defaults.
 
 	# Default cache class.
 	# Specify None if you do not want cache by default.
-	default__cache_class = caches.LRUCache
+	def___cache_class = caches.LRUCache
 
 	# Object attribute used to store per-instance caches.
 	# Note: It must begin with double underscore to avoid conflicts if same method is cached at several inheritance levels.
-	default__attr_cache = '__caches'
+	def___attr_cache = '__caches'
 
 	# List of argument names used to identify unbound methods.
-	default__arg_self = ['self']
+	def___arg_self = ['self']

@@ -10,7 +10,7 @@ class AbstractCacheDefaults():
 	"""Caches defaults access."""
 
 	# Defaults prefix.
-	_prefix = 'default_'
+	_prefix = 'def__'
 	_suffix_None = '__None'
 
 	# Property access will affect all created instances by accessing/modifying the class static properties.
