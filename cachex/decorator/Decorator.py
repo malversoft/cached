@@ -159,7 +159,7 @@ class Decorator():
 		if exceptions:
 			try:
 				exceptions_iter = iter(exceptions)
-			except:
+			except Exception:
 				if not (isinstance(exceptions, type) and issubclass(exceptions, Exception)):
 					exceptions = Exception
 			else:

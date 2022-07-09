@@ -31,7 +31,7 @@ class Helper():
 
 		try:
 			iter(module)
-		except:
+		except Exception:
 			for k in dir(module):
 				if k.startswith('_'):
 					continue
@@ -39,7 +39,7 @@ class Helper():
 				if cls.is_cache_class(kls):
 					try:
 						iter(func)
-					except:
+					except Exception:
 						func(kls)
 					else:
 						for f in func:
