@@ -4,7 +4,7 @@
 from collections.abc import MutableMapping
 import inspect
 
-from .CacheClassWrapper import _get_wrapper_class
+from .CacheWrapper import CacheWrapper
 from .CacheDefaults import CacheDefaults
 
 
@@ -49,6 +49,10 @@ class Helper():
 				cls.with_module_cache_classes(m, func)
 
 	@classmethod
+	def _wrap_class(cls, kls):
+		return type(kls.__name__, (CacheWrapper, kls), {})
+
+	@classmethod
 	def convert_class(cls, kls):
 
 		if not isinstance(kls, type):
@@ -82,7 +86,7 @@ class Helper():
 			cls.attr_converted_class : True,
 		}
 
-		wrapper_kls = _get_wrapper_class(kls)
+		wrapper_kls = cls._wrap_class(kls)
 		for a in attrs:
 			setattr(wrapper_kls, a, attrs[a])
 
