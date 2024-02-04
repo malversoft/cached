@@ -112,10 +112,7 @@ class CacheWrapper():
 			except AttributeError:
 				# Support any mutable mapping.
 				maxsize = None
-			if maxsize == math.inf:
-				return None
-			else:
-				return maxsize
+			return None if maxsize == math.inf else maxsize
 
 	def _currsize_info(self):
 		try:
@@ -133,10 +130,14 @@ class CacheWrapper():
 
 	def __repr__(self):
 		with self.counters(False):
-			items = list(self.items())
+			items = repr(getattr(self, '_Cache__data', list(self.items())))
 		counters = self.counters and ', hits=%r, misses=%r' % (self.__hits, self.__misses,) or ''
-		params = ', '.join(['%s=%r' % (k, self.__parameters[k]) for k in self.__parameters if k not in ('maxsize',)])
-		return '%s(%r%s, currsize=%r, maxsize=%r%s)' % (
+		params = ', '.join([
+			'%s=%s' % (k, repr(self.__parameters[k]) if not callable(self.__parameters[k]) else str(self.__parameters[k].__name__))
+			for k in self.__parameters
+			if k not in ('maxsize',)
+		])
+		return '%s(%s%s, currsize=%r, maxsize=%r%s)' % (
 			type(self).__name__,
 			items,
 			counters,
