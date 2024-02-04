@@ -15,6 +15,7 @@ class CacheDefaults(AbstractCacheDefaults):
 
 	def__maxsize = 128
 	def__ttl = 600
+	def__ttu = lambda key, value, time: time + 600
 
 	# Protected defaults.
 

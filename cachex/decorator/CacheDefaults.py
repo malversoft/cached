@@ -13,8 +13,10 @@ class CacheDefaults(type(caches.defaults)):
 
 	# Emulate Python @functools.lru_cache() defaults.
 	def__maxsize__None = math.inf
-	def__ttl__None = math.inf
 	def__typed = False
+
+	def__ttl__None = math.inf
+	def__ttu__None = lambda key, value, time: math.inf
 
 	def__exceptions = None
 	def__stateful = False

@@ -15,38 +15,80 @@ class DecoratorBuilder():
 
 	# Functions to build the decorator nodes.
 
-	@classmethod
-	def lfu_cache(cls, transformer):
-		def cachefactory(maxsize = None):
-			return CacheDescription(caches.LFUCache, locals())
-		return cls._makenode(transformer, cachefactory)
+	try: caches.FIFOCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def fifo_cache(cls, transformer):
+			def cachefactory(maxsize = None):
+				return CacheDescription(caches.FIFOCache, locals())
+			return cls._makenode(transformer, cachefactory)
 
-	@classmethod
-	def lru_cache(cls, transformer):
-		def cachefactory(maxsize = None):
-			return CacheDescription(caches.LRUCache, locals())
-		return cls._makenode(transformer, cachefactory)
+	try: caches.LFUCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def lfu_cache(cls, transformer):
+			def cachefactory(maxsize = None):
+				return CacheDescription(caches.LFUCache, locals())
+			return cls._makenode(transformer, cachefactory)
 
-	@classmethod
-	def ttl_cache(cls, transformer):
-		def cachefactory(maxsize = None, ttl = None, timer = None):
-			return CacheDescription(caches.TTLCache, locals())
-		return cls._makenode(transformer, cachefactory)
+	try: caches.LRUCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def lru_cache(cls, transformer):
+			def cachefactory(maxsize = None):
+				return CacheDescription(caches.LRUCache, locals())
+			return cls._makenode(transformer, cachefactory)
 
-	@classmethod
-	def rr_cache(cls, transformer):
-		def cachefactory(maxsize = None, choice = None):
-			return CacheDescription(caches.RRCache, locals())
-		return cls._makenode(transformer, cachefactory)
+	try: caches.MRUCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def mru_cache(cls, transformer):
+			def cachefactory(maxsize = None):
+				return CacheDescription(caches.MRUCache, locals())
+			return cls._makenode(transformer, cachefactory)
 
-	@classmethod
-	def unbounded_cache(cls, transformer):
-		def cachefactory(ttl = None, timer = None):
-			if ttl is None:
-				return CacheDescription(caches.UnboundedCache)
-			else:
-				return CacheDescription(caches.UnboundedTTLCache, locals())
-		return cls._makenode(transformer, cachefactory)
+	try: caches.RRCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def rr_cache(cls, transformer):
+			def cachefactory(maxsize = None, choice = None):
+				return CacheDescription(caches.RRCache, locals())
+			return cls._makenode(transformer, cachefactory)
+
+	try: caches.TTLCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def ttl_cache(cls, transformer):
+			def cachefactory(maxsize = None, ttl = None, timer = None):
+				return CacheDescription(caches.TTLCache, locals())
+			return cls._makenode(transformer, cachefactory)
+
+	try: caches.TLRUCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def tlru_cache(cls, transformer):
+			def cachefactory(maxsize = None, ttu = None, timer = None):
+				return CacheDescription(caches.TLRUCache, locals())
+			return cls._makenode(transformer, cachefactory)
+
+	try: caches.UnboundedCache, caches.UnboundedTTLCache
+	except AttributeError: pass
+	else:
+		@classmethod
+		def unbounded_cache(cls, transformer):
+			def cachefactory(ttl = None, timer = None):
+				if ttl is None:
+					return CacheDescription(caches.UnboundedCache)
+				else:
+					return CacheDescription(caches.UnboundedTTLCache, locals())
+			return cls._makenode(transformer, cachefactory)
 
 	@classmethod
 	def _makenode(cls, transformer, cachefactory):

@@ -30,7 +30,11 @@ def _build_decorator_structure():
 		setattr(_root, name, _defaultnode(transformer))
 
 	# Create cache-specific leaves...
-	for method in ('lfu_cache', 'lru_cache', 'ttl_cache', 'rr_cache', 'unbounded_cache', 'shared',):
+	for method in (
+		method.__func__.__name__
+		for method in DecoratorBuilder.__dict__.values()
+		if isinstance(method, classmethod) and not method.__func__.__name__.startswith('_')
+	):
 		_node = getattr(DecoratorBuilder, method)
 		# ... in root.
 		setattr(_root, method, _node(_func_transformer))

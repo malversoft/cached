@@ -169,28 +169,46 @@ The cache to use for memoizing call results can be specified in four ways.
 
   All arguments are optional and can take [default] values. Even the parenthesis are optional.
 
-  - Cache with least recently used (LRU) eviction algorithm
+  - Cache with first-in first-out (FIFO) eviction algorithm (requires cachetools version >= 4.2.0).
 
     ```python
-    @cached.lru_cache(maxsize)
+    @cached.fifo_cache(maxsize)
     ```
 
-  - Cache with least frequently used (LFU) eviction algorithm
+  - Cache with least frequently used (LFU) eviction algorithm (requires cachetools version >= 4.0.0).
 
     ```python
     @cached.lfu_cache(maxsize)
     ```
 
-  - Cache with random replacement eviction algorithm
+  - Cache with least recently used (LRU) eviction algorithm (requires cachetools version >= 4.0.0).
+
+    ```python
+    @cached.lru_cache(maxsize)
+    ```
+
+  - Cache with most recently used (MRU) eviction algorithm (requires cachetools version >= 4.2.0).
+
+    ```python
+    @cached.mru_cache(maxsize)
+    ```
+
+  - Cache with random replacement eviction algorithm (requires cachetools version >= 4.0.0).
 
     ```python
     @cached.rr_cache(maxsize, choice)
     ```
 
-  - Cache with least recently used (LRU) eviction algorithm and per-item time-to-live (TTL).
+  - Cache with least recently used (LRU) eviction algorithm and per-item time-to-live (TTL) (requires cachetools version >= 4.0.0).
 
     ```python
     @cached.ttl_cache(maxsize, ttl, timer)
+    ```
+
+  - Cache with time-aware least recently used (TLRU) eviction algorithm (requires cachetools version >= 5.0.0).
+
+    ```python
+    @cached.tlru_cache(maxsize, ttu, timer)
     ```
 
   - Unbounded cache with optional per-item time-to-live (TTL).
@@ -1098,22 +1116,38 @@ The decorator makes its best to be compatible with other memoizing solutions lik
   - ```python
     @functools.lru_cache[(maxsize, typed)]
 
-    @cachetools.func.lru_cache[(maxsize, typed)]
+    @cachetools.func.fifo_cache[(maxsize, typed)]
     @cachetools.func.lfu_cache[(maxsize, typed)]
+    @cachetools.func.lru_cache[(maxsize, typed)]
+    @cachetools.func.mru_cache[(maxsize, typed)]
     @cachetools.func.rr_cache[(maxsize, choice, typed)]
     @cachetools.func.ttl_cache[(maxsize, ttl, timer, typed)]
+    @cachetools.func.tlru_cache[(maxsize, ttu, timer, typed)]
     ```
 
     Using the [cachex] decorator:
 
     ```python
-    @cached.lru_cache[(maxsize, typed)]
+    @cached.fifo_cache[(maxsize, typed)]
     @cached.lfu_cache[(maxsize, typed)]
+    @cached.lru_cache[(maxsize, typed)]
+    @cached.mru_cache[(maxsize, typed)]
     @cached.rr_cache[(maxsize, choice, typed)]
     @cached.ttl_cache[(maxsize, ttl, timer, typed)]
+    @cached.tlru_cache[(maxsize, ttu, timer, typed)]
     ```
 
     Default parameters values are also compatible, altough they can be modified using [defaults] management.
+
+  - ```python
+    @functools.cache
+    ```
+
+    Using the [cachex] decorator:
+
+    ```python
+    @cached(None)
+    ```
 
   - ```python
     @functools.cached_property
