@@ -38,7 +38,7 @@ def myfunction(some_arg, ...):
 
 This will use a default [cache class] to cache the results returned by the function, based on the function parameters. The next time it is called with the same parameter values the function will not be executed again, but instead the result value will be retrieved from the cache.
 
-The cache is unbounded by default, but a maximum size can be specified to avoid it growing indefinitely.
+The cache maximum size can be specified explicitly.
 
 ```python
 @cached(maxsize=1024)
@@ -211,10 +211,10 @@ The cache to use for memoizing call results can be specified in four ways.
     @cached.tlru_cache(maxsize, ttu, timer)
     ```
 
-  - Unbounded cache with optional per-item time-to-live (TTL).
+  - Unbounded cache with no eviction algorithm.
 
     ```python
-    @cached.unbounded_cache(ttl, timer)
+    @cached.unbounded_cache()
     ```
 
   Please refer to the specific [cache implementations](caches.md#cache-implementations) for information about the meaning of the parameters.
@@ -1146,7 +1146,7 @@ The decorator makes its best to be compatible with other memoizing solutions lik
     Using the [cachex] decorator:
 
     ```python
-    @cached(None)
+    @cached(maxsize=None)
     ```
 
   - ```python

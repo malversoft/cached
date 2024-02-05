@@ -83,11 +83,8 @@ class DecoratorBuilder():
 	else:
 		@classmethod
 		def unbounded_cache(cls, transformer):
-			def cachefactory(ttl = None, timer = None):
-				if ttl is None:
-					return CacheDescription(caches.UnboundedCache)
-				else:
-					return CacheDescription(caches.UnboundedTTLCache, locals())
+			def cachefactory():
+				return CacheDescription(caches.UnboundedCache)
 			return cls._makenode(transformer, cachefactory)
 
 	@classmethod

@@ -12,7 +12,7 @@ class CacheDescription(OrderedDict):
 
 	_class_key = '__class__'
 
-	def __init__(self, kls, params):
+	def __init__(self, kls, params={}):
 		self[self._class_key] = kls
 		self.update(params)
 
