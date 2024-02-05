@@ -17,7 +17,7 @@ It also provides an all-in-one decorator to conveniently memoize any function ca
 
 ## License
 
-Copyright (c) 2020 Fernando Lordán.
+Copyright (c) 2020-2024 Fernando Lordán.
 
 Licensed under the [MIT License].
 
